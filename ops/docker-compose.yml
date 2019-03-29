@@ -1,0 +1,34 @@
+version: '3'
+
+services:
+
+  nginx:
+    build:
+      context: nginx
+    # command: ['nginx-debug']
+    image: local_example_nginx
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes:
+      - ../example:/var/www/example
+    depends_on:
+      - example_php_fpm
+      - postgres
+
+  example_php_fpm:
+    build:
+      context: example/php_fpm
+    image: local_example_php_fpm
+    volumes:
+      - ../example:/var/www/example
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres
+    volumes:
+      - ../example/storage/db:/var/lib/postgresql/data
+
+  selenium:
+    image: selenium/standalone-chrome:latest
