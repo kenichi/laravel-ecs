@@ -29,6 +29,3 @@ services:
     image: postgres
     volumes:
       - ../example/storage/db:/var/lib/postgresql/data
-
-  selenium:
-    image: selenium/standalone-chrome:latest
